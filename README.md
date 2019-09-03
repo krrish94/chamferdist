@@ -1,6 +1,6 @@
 # chamferdist: PyTorch Chamfer distance
 
->> **NOTE**: This is a borrowed implementation from the elegant [AtlasNet](https://github.com/ThibaultGROUEIX/AtlasNet/tree/master/extension) GitHub repo, and all I did was to simply package it.
+> **NOTE**: This is a borrowed implementation from the elegant [AtlasNet](https://github.com/ThibaultGROUEIX/AtlasNet/tree/master/extension) GitHub repo, and all I did was to simply package it.
 
 A simple example Pytorch module to compute Chamfer distance between two pointclouds. Basically a wrapper around the elegant implementation from [AtlasNet](https://github.com/ThibaultGROUEIX/AtlasNet/tree/master/extension).
 
