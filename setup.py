@@ -14,6 +14,7 @@ setup(
     version='0.2.0',
     description='Pytorch Chamfer distance', 
     long_description=long_description,
+    requirements=requirements,
     ext_modules=[
         CUDAExtension('chamferdistcuda', [
             'chamferdist/chamfer_cuda.cpp',
