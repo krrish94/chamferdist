@@ -4,7 +4,15 @@
 
 A simple example Pytorch module to compute Chamfer distance between two pointclouds. Basically a wrapper around the elegant implementation from [AtlasNet](https://github.com/ThibaultGROUEIX/AtlasNet/tree/master/extension).
 
-### Building
+### Installation
+
+You can install the package using `pip`.
+
+```
+pip install chamferdist
+```
+
+### Building from source
 
 In your favourite python/conda virtual environment, execute the following commands. 
 
