@@ -2,7 +2,7 @@ from setuptools import setup
 from torch.utils.cpp_extension import BuildExtension, CUDAExtension
 
 package_name = 'chamferdist'
-version = '0.3.'
+version = '0.3.0'
 requirements = [
     'Cython',
     'torch>1.1.0',
