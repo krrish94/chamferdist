@@ -1,17 +1,18 @@
 from setuptools import setup
 from torch.utils.cpp_extension import BuildExtension, CUDAExtension
 
-long_description = 'A pytorch module to compute Chamfer distance \
-                    between two point sets (pointclouds).'
-
+package_name = 'chamferdist'
+version = '0.2.5'
 requirements = [
     'Cython',
     'torch>1.1.0',
 ]
+long_description = 'A pytorch module to compute Chamfer distance \
+                    between two point sets (pointclouds).'
 
 setup(
     name='chamferdist',
-    version='0.2.0',
+    version=version,
     description='Pytorch Chamfer distance', 
     long_description=long_description,
     requirements=requirements,

@@ -10,6 +10,7 @@ from chamferdist import ChamferDistance
 # (Batchsize x Number of points x Number of dims)
 pc1 = torch.randn(1, 100, 3).cuda().contiguous()
 pc2 = torch.randn(1, 50, 3).cuda().contiguous()
+pc1.requires_grad = True
 
 # Initialize Chamfer distance module
 chamferDist = ChamferDistance()
@@ -26,3 +27,4 @@ print(dist1.shape, dist2.shape, idx1.shape, idx2.shape)
 # usually we average both the distances
 cdist = 0.5 * (dist1.mean() + dist2.mean())
 print('Chamfer distance:', cdist)
+cdist.backward()
