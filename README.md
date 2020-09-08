@@ -28,7 +28,7 @@ That's it! You're now ready to go. Here's a quick guide to using the package. Fi
 
 ```python
 >>> import torch
->>> from chamferdist import ChamferDist
+>>> from chamferdist import ChamferDistance
 ```
 
 Create two random pointclouds. Each pointcloud is a 3D tensor with dimensions `batchsize` x `number of points` x `number of dimensions`.
@@ -38,7 +38,7 @@ Create two random pointclouds. Each pointcloud is a 3D tensor with dimensions `b
 >>> pc2 = torch.randn(1, 50, 3).cuda().contiguous()
 ```
 
-Initialize a `ChamferDist` object.
+Initialize a `ChamferDistance` object.
 ```python
 >>> chamferDist = ChamferDistance()
 ```
