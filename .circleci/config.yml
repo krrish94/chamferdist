@@ -48,11 +48,11 @@ jobs:
       - *install_deps
       - *build_pkg
 
-  PyTorch_1_4:
+  PyTorch_1_5:
     docker:
       - image: circleci/python:3.6
     environment:
-      - TORCH_VERSION: "torch==1.4"
+      - TORCH_VERSION: "torch==1.5"
     steps: &steps
       - checkout
       - *flake8_test
