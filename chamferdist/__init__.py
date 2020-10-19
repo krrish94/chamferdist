@@ -1,1 +1,1 @@
-from .ChamferDistance import ChamferDistance
+from .chamfer import ChamferDistance

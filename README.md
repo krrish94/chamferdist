@@ -1,8 +1,8 @@
 # chamferdist: PyTorch Chamfer distance
 
-> **NOTE**: This is a borrowed implementation from the elegant [AtlasNet](https://github.com/ThibaultGROUEIX/AtlasNet/tree/master/extension) GitHub repo, and all I did was to simply package it.
+> **NOTE**: This implementation was stolen from the [pytorch3d](https://github.com/facebookresearch/pytorch3d) repo, and all I did was to simply repackage it.
 
-A simple example Pytorch module to compute Chamfer distance between two pointclouds. Basically a wrapper around the elegant implementation from [AtlasNet](https://github.com/ThibaultGROUEIX/AtlasNet/tree/master/extension).
+A simple example Pytorch module to compute Chamfer distance between two pointclouds.
 
 ### Installation
 
@@ -16,7 +16,7 @@ pip install chamferdist
 
 In your favourite python/conda virtual environment, execute the following commands. 
 
-> **NOTE**: This assumes you have PyTorch installed already (preferably, > 1.1.0; untested for earlier releases).
+> **NOTE**: This assumes you have PyTorch installed already (preferably, >= 1.4.0; untested for earlier releases).
 
 ```python
 python setup.py install
@@ -34,8 +34,8 @@ That's it! You're now ready to go. Here's a quick guide to using the package. Fi
 Create two random pointclouds. Each pointcloud is a **3D tensor** with dimensions `batchsize` x `number of points` x `number of dimensions`.
 
 ```python
->>> pc1 = torch.randn(1, 100, 3).cuda().contiguous()
->>> pc2 = torch.randn(1, 50, 3).cuda().contiguous()
+>>> source_cloud = torch.randn(1, 100, 3).cuda()
+>>> target_cloud = torch.randn(1, 50, 3).cuda()
 ```
 
 Initialize a `ChamferDistance` object.
@@ -45,24 +45,41 @@ Initialize a `ChamferDistance` object.
 
 Now, compute Chamfer distance.
 ```python
->>> dist1, dist2, idx1, idx2 = chamferDist(pc1, pc2)
->>> print(dist1.shape, dist2.shape, idx1.shape, idx2.shape)
+>>> dist_forward = chamferDist(source_cloud, target_cloud)
+>>> print(dist_forward.detach().cpu().item())
 ```
 
-Here, `dist1` is the Chamfer distance between `pc1` and `pc2`. Note that Chamfer distance is not bidirectional (and, in stricter parlance, it is not a _distance metric_). The Chamfer distance in the other direction, i.e., `pc2` to `pc1` is stored in the variable `dist2`.
+Here, `dist` is the Chamfer distance between `source_cloud` and `target_cloud`. Note that Chamfer distance is not bidirectional (and, in stricter parlance, it is not a _distance metric_).
 
-For each point in `pc1`, `idx1` stores the index of the closest point in `pc2`. For each point in `pc2`, `idx2` stores the index of the closest point in `pc1`.
+The Chamfer distance in the backward direction, i.e., `target_cloud` to `source_cloud` can be computed in two ways. The naive way is to simply flip the order of the arguments, i.e.,
+```python
+>>> dist_backward = chamferDist(target_cloud, source_cloud)
+```
+Another way is to use the `reverse` flag provided by the `ChamferDistance` module, i.e.,
+```python
+>>> dist_backward = chamferDist(source_cloud, target_cloud, reverse=True)
+>>> print(dist_backward.detach().cpu().item())
+```
+
+Typically, a symmetric version of the Chamfer distance is obtained, by summing the "forward" and the "backward" Chamfer distances. This is supported by the `bidirectional` flag.
+```python
+>>> dist_bidirectional = chamferDist(source_cloud, target_cloud, bidirectional=True)
+>>> print(dist_bidirectional.detach().cpu().item())
+```
+
+Look at the example script for more details: [example.py](example.py)
 
 
-### Citing (the original implementation, AtlasNet)
+### Citing (the original implementation, PyTorch3D)
 
-If you find this work useful, you might want to cite the *original* implementation from which this codebase was borrowed (stolen!) - AtlasNet.
+If you find this work useful, you might want to cite the *original* implementation from which this codebase was borrowed (stolen!) - PyTorch3D.
 
 ```
-@inproceedings{groueix2018,
-    title={{AtlasNet: A Papier-M\^ach\'e Approach to Learning 3D Surface Generation}},
-    author={Groueix, Thibault and Fisher, Matthew and Kim, Vladimir G. and Russell, Bryan and Aubry, Mathieu},
-    booktitle={Proceedings IEEE Conf. on Computer Vision and Pattern Recognition (CVPR)},
-    year={2018}
+@article{ravi2020pytorch3d,
+    author = {Nikhila Ravi and Jeremy Reizenstein and David Novotny and Taylor Gordon
+                  and Wan-Yen Lo and Justin Johnson and Georgia Gkioxari},
+    title = {Accelerating 3D Deep Learning with PyTorch3D},
+    journal = {arXiv:2007.08501},
+    year = {2020},
 }
 ```
