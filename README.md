@@ -2,7 +2,7 @@
 
 > **NOTE**: This implementation was stolen from the [pytorch3d](https://github.com/facebookresearch/pytorch3d) repo, and all I did was to simply repackage it.
 
-[![krrish94](https://circleci.com/gh/krrish/<chamferdist>.svg?style=svg)](<https://app.circleci.com/pipelines/github/krrish94/chamferdist>)
+[![krrish94](https://circleci.com/gh/krrish94/chamferdist.svg?style=svg)](<https://app.circleci.com/pipelines/github/krrish94/chamferdist>)
 
 A simple example Pytorch module to compute Chamfer distance between two pointclouds.
 
@@ -18,7 +18,7 @@ pip install chamferdist
 
 In your favourite python/conda virtual environment, execute the following commands. 
 
-> **NOTE**: This assumes you have PyTorch installed already (preferably, >= 1.4.0; untested for earlier releases).
+> **NOTE**: This assumes you have PyTorch installed already (preferably, >= 1.5.0; untested for earlier releases).
 
 ```python
 python setup.py install
