@@ -36,8 +36,6 @@ jobs:
       - *flake8_test
       - *install_deps
       - *build_pkg
-      - *build_docs
-      - *tests
 
 workflows:
   version: 2.1
