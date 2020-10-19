@@ -37,7 +37,7 @@ jobs:
       - *install_deps
       - *build_pkg
 
-  PyTorch1.6:
+  PyTorch_1_6:
     docker:
       - image: circleci/python:3.6
     environment:
@@ -48,7 +48,7 @@ jobs:
       - *install_deps
       - *build_pkg
 
-  PyTorch1.5:
+  PyTorch_1_5:
     docker:
       - image: circleci/python:3.6
     environment:
@@ -59,7 +59,7 @@ jobs:
       - *install_deps
       - *build_pkg
 
-  PyTorch1.4:
+  PyTorch_1_4:
     docker:
       - image: circleci/python:3.6
     environment:
@@ -74,7 +74,7 @@ workflows:
   version: 2.1
   build:
     jobs:
-      - PyTorh
-      - PyTorch1.6
-      - PyTorch1.5
-      - PyTorch1.4
+      - PyTorch
+      - PyTorch_1_6
+      - PyTorch_1_5
+      - PyTorch_1_4
