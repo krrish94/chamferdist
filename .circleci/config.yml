@@ -30,7 +30,40 @@ jobs:
     docker:
       - image: circleci/python:3.6
     environment:
+      - TORCH_VERSION: "torch"
+    steps: &steps
+      - checkout
+      - *flake8_test
+      - *install_deps
+      - *build_pkg
+
+  PyTorch1.6:
+    docker:
+      - image: circleci/python:3.6
+    environment:
       - TORCH_VERSION: "torch==1.6"
+    steps: &steps
+      - checkout
+      - *flake8_test
+      - *install_deps
+      - *build_pkg
+
+  PyTorch1.5:
+    docker:
+      - image: circleci/python:3.6
+    environment:
+      - TORCH_VERSION: "torch==1.5"
+    steps: &steps
+      - checkout
+      - *flake8_test
+      - *install_deps
+      - *build_pkg
+
+  PyTorch1.4:
+    docker:
+      - image: circleci/python:3.6
+    environment:
+      - TORCH_VERSION: "torch==1.4"
     steps: &steps
       - checkout
       - *flake8_test
@@ -41,4 +74,7 @@ workflows:
   version: 2.1
   build:
     jobs:
-      - PyTorch
+      - PyTorh
+      - PyTorch1.6
+      - PyTorch1.5
+      - PyTorch1.4
