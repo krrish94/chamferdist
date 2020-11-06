@@ -2,17 +2,15 @@ import os
 import runpy
 
 import torch
-from setuptools import setup
+from setuptools import find_packages, setup
 from torch.utils.cpp_extension import CUDA_HOME, CppExtension, CUDAExtension
 
 
 def get_extensions():
-    this_dir = os.path.dirname(os.path.abspath(__file__))
-
-    include_dirs = [os.path.join(this_dir, "chamferdist")]
-    main_source = os.path.join(this_dir, "chamferdist", "ext.cpp")
-    sources = [os.path.join(this_dir, "chamferdist", "knn_cpu.cpp")]
-    source_cuda = [os.path.join(this_dir, "chamferdist", "knn.cu")]
+    include_dirs = ["chamferdist"]
+    main_source = os.path.join("chamferdist", "ext.cpp")
+    sources = [os.path.join("chamferdist", "knn_cpu.cpp")]
+    source_cuda = [os.path.join("chamferdist", "knn.cu")]
     sources = [main_source] + sources
 
     extension = CppExtension
@@ -79,6 +77,8 @@ setup(
     name="chamferdist",
     version=__version__,
     description="Pytorch Chamfer distance",
+    packages=find_packages(),
+    package_data={'chamferdist': ['*.cu', '*.cuh', '*.h']},
     long_description=long_description,
     install_requires=[],
     extras_require={
