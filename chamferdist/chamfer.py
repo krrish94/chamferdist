@@ -71,8 +71,8 @@ class ChamferDistance(torch.nn.Module):
                 "Both bidirectional and reverse set to True. "
                 "bidirectional behavior takes precedence."
             )
-        if reduction != "sum" and reduction != "mean":
-            raise ValueError('Reduction must either be "sum" or "mean".')
+        if reduction != "sum" and reduction != "mean" and reduction != None:
+            raise ValueError('Reduction must either be "sum" or "mean" or None.')
 
         source_nn = knn_points(
             source_cloud,
