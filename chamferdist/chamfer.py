@@ -27,7 +27,8 @@ class ChamferDistance(torch.nn.Module):
         target_cloud: torch.Tensor,
         bidirectional: Optional[bool] = False,
         reverse: Optional[bool] = False,
-        reduction: Optional[str] = "mean",
+        batch_reduction: Optional[str] = "mean",
+        point_reduction: Optional[str] = "sum",
     ):
 
         if not isinstance(source_cloud, torch.Tensor):
@@ -71,8 +72,10 @@ class ChamferDistance(torch.nn.Module):
                 "Both bidirectional and reverse set to True. "
                 "bidirectional behavior takes precedence."
             )
-        if reduction != "sum" and reduction != "mean" and reduction != None:
-            raise ValueError('Reduction must either be "sum" or "mean" or None.')
+        if point_reduction != "sum" and point_reduction != "mean" and point_reduction != None:
+            raise ValueError('Point reduction must either be "sum" or "mean" or None.')
+        if batch_reduction != "sum" and batch_reduction != "mean" and batch_reduction != None:
+            raise ValueError('Batch reduction must either be "sum" or "mean" or None.')
 
         source_nn = knn_points(
             source_cloud,
@@ -99,15 +102,20 @@ class ChamferDistance(torch.nn.Module):
             # Backward Chamfer distance (batchsize_source, lengths_source)
             chamfer_backward = target_nn.dists[..., 0]
 
-        chamfer_forward = chamfer_forward.sum(1)  # (batchsize_source,)
-        if reverse or bidirectional:
-            chamfer_backward = chamfer_backward.sum(1)  # (batchsize_target,)
+        if point_reduction == "sum":
+            chamfer_forward = chamfer_forward.sum(1)  # (batchsize_source,)
+            if reverse or bidirectional:
+                chamfer_backward = chamfer_backward.sum(1)  # (batchsize_target,)
+        elif point_reduction == "mean":
+            chamfer_forward = chamfer_forward.mean(1)  # (batchsize_source,)
+            if reverse or bidirectional:
+                chamfer_backward = chamfer_backward.mean(1)  # (batchsize_target,)
 
-        if reduction == "sum":
+        if batch_reduction == "sum":
             chamfer_forward = chamfer_forward.sum()  # (1,)
             if reverse or bidirectional:
                 chamfer_backward = chamfer_backward.sum()  # (1,)
-        elif reduction == "mean":
+        elif batch_reduction == "mean":
             chamfer_forward = chamfer_forward.mean()  # (1,)
             if reverse or bidirectional:
                 chamfer_backward = chamfer_backward.mean()  # (1,)
