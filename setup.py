@@ -15,7 +15,7 @@ def get_extensions():
 
     extension = CppExtension
 
-    extra_compile_args = {"cxx": ["-std=c++14"]}
+    extra_compile_args = {"cxx": ["-std=c++17"]}
     define_macros = []
 
     force_cuda = os.getenv("FORCE_CUDA", "0") == "1"
